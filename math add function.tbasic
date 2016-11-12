@@ -1,0 +1,105 @@
+'------------------------------------------------------------------------------
+'thinAir Visual Designer
+'------------------------------------------------------------------------------
+' Project: Visual Designer generated code
+' File:    Your file name
+' Created: On 11-12-2016 at 01:52:00
+'------------------------------------------------------------------------------
+
+'---Needed thinBasic modules
+Uses "UI"
+
+'---Controls IDs---
+Begin ControlID
+	%IDC_BUTTON_1
+	%IDC_EDIT_1
+	%IDC_EDIT_2
+	%IDC_EDIT_3
+End ControlID
+
+
+
+'------------------------------------------------------------------------------
+' Main thinBasic function
+'------------------------------------------------------------------------------
+Function TBMain() As Long
+
+	MainWindow_Create(%HWND_DESKTOP)
+
+End Function
+      
+      
+Local hDlg     As Long
+	
+'------------------------------------------------------------------------------
+' Create main Window
+'------------------------------------------------------------------------------
+Function MainWindow_Create(ByVal hParent As Long) As Long
+
+
+	Local hFont    As Long
+	Local lStyle   As Long
+	Local lStyleEx As Long
+	lStyle = _                          
+	        %WS_DLGFRAME          | _   
+	        %WS_CAPTION           | _   
+	        %WS_SYSMENU           | _   
+	        %WS_OVERLAPPEDWINDOW  | _   
+	        %WS_CLIPCHILDREN      | _   
+	        %WS_CLIPSIBLINGS      | _   
+	        %DS_CENTER                  
+	lStyleEx = 0                        
+
+	Dialog New Pixels, hParent, "Form1", -1, -1, 468, 225, lStyle, lStyleEx, To hDlg
+
+	hFont = Font_Create("MS Sans Serif", 8)
+	Dialog Send hDlg, %WM_SETFONT, hFont, 0
+
+
+
+	Control Add Button, hDlg, %IDC_BUTTON_1, "+", 328, 48, 96, 32, %WS_CHILD Or %WS_CLIPSIBLINGS Or %WS_TABSTOP Or %WS_VISIBLE Or %BS_PUSHBUTTON, 0
+	Control Add Textbox, hDlg, %IDC_EDIT_1, "Edit1", 56, 24, 200, 26, %WS_CHILD Or %WS_CLIPSIBLINGS Or %WS_TABSTOP Or %WS_VISIBLE, %WS_EX_CLIENTEDGE
+	Control Add Textbox, hDlg, %IDC_EDIT_2, "Edit2", 56, 72, 200, 26, %WS_CHILD Or %WS_CLIPSIBLINGS Or %WS_TABSTOP Or %WS_VISIBLE, %WS_EX_CLIENTEDGE
+	Control Add Textbox, hDlg, %IDC_EDIT_3, "Edit3", 56, 120, 200, 26, %WS_CHILD Or %WS_CLIPSIBLINGS Or %WS_TABSTOP Or %WS_VISIBLE, %WS_EX_CLIENTEDGE
+
+	Dialog Show Modal hDlg, Call MainWindow_Proc
+
+	Win_DeleteObject hFont
+
+End Function
+
+'------------------------------------------------------------------------------
+' Main WIndow CallBack handler
+'------------------------------------------------------------------------------
+CallBack Function MainWindow_Proc() As Long
+
+	Local pNMHDR   As NMHDR Ptr
+
+	Local PageNo   As Long     
+
+	Local hFontTab As Long     
+
+	Select Case (CBMSG)
+
+	    Case %WM_INITDIALOG
+	    Case %WM_COMMAND
+	        Select Case LOWRD(CBWPARAM)
+	            Case %IDC_BUTTON_1
+	            
+	                If CBCTLMSG = %BN_CLICKED Or CBCTLMSG = 1 Then
+                  
+                           Control_SetText hDlg, %IDC_EDIT_1, "dd"
+
+
+                  End If
+	            
+	            
+	            Case %IDCANCEL
+	        End Select
+
+	    Case %WM_NOTIFY
+	    Case %WM_DESTROY
+	End Select
+End Function
+
+
